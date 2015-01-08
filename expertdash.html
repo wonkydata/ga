@@ -69,11 +69,6 @@
 			<h3 class="Chart-title">Top Offsite Links</h3>
 			<div id="chart8"></div>
 		</section>
-		<!--Chart 9-->
-		<section class="myChart Component">
-			<h3 class="Chart-title">Sessions by Source and Pages/Session</h3>
-			<div id="chart9"></div>
-		</section>
 		<!--Chart 10-->
 		<section class="myChart Component">
 			<h3 class="Chart-title">Total Pageviews from Social</h3>
@@ -318,25 +313,6 @@
 				}
 			});
 			
-			var dataChart9 = new gapi.analytics.googleCharts.DataChart({
-				query: {
-			          'dimensions': 'ga:medium',
-			          'metrics': 'ga:sessions,ga:pageviewsPerSession',
-			          'start-date': '30daysAgo',
-			          'end-date': 'yesterday',
-			          'filters': 'ga:medium!@sm;ga:medium!@sem;ga:medium!@tcg;ga:medium!@none',
-			          'sort': '-ga:sessions',
-			          'max-results': '10',
-				},
-				chart: {
-					container: 'chart9',
-					type: 'TABLE',
-					options: {
-						width: '100%'
-					}
-				}
-			});
-			
 			var dataChart10 = new gapi.analytics.googleCharts.DataChart({
 				query: {
 			          'dimensions': 'ga:date',
@@ -400,9 +376,6 @@
 					query: data
 				}).execute();
 				dataChart8.set({
-					query: data
-				}).execute();
-				dataChart9.set({
 					query: data
 				}).execute();
 				dataChart10.set({
