@@ -28,6 +28,11 @@
 			<h3 class="Chart-title">Total Traffic In Pageviews</h3>
 			<div id="chart1"></div>
 		</section>
+		<!--Chart 1a-->
+		<section class="myChart Component">
+			<h3 class="Chart-title">Total Traffic In Pageviews</h3>
+			<div id="chart1a"></div>
+		</section>
 		<!--Chart 2-->
 		<section class="myChart Component">
 			<h3 class="Chart-title">Most Popular Content</h3>
@@ -165,10 +170,28 @@
 					type: 'LINE',
 					options: {
 						width: '100%',
-						title: 'Pageviews for 30 days'
+						title: 'Last 30 Days'
 					}
 				}
 			});
+			
+			var dataChart1a = new gapi.analytics.googleCharts.DataChart({
+				query: {
+				  'dimensions': 'ga:date',
+			          'metrics': 'ga:pageviews',
+			          'start-date': '60daysAgo',
+			          'end-date': '30daysAgo',
+				},
+				chart: {
+					container: 'chart1a',
+					type: 'LINE',
+					options: {
+						width: '100%',
+						title: '60 Days Ago'
+					}
+				}
+			});
+			
 			var dataChart2 = new gapi.analytics.googleCharts.DataChart({
 				query: {
 			          'dimensions': 'ga:pagePath',
@@ -395,6 +418,9 @@
 			 */
 			function updateCharts(data) {
 				dataChart1.set({
+					query: data
+				}).execute();
+				dataChart1a.set({
 					query: data
 				}).execute();
 				dataChart2.set({
