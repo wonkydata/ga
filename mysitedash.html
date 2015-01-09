@@ -185,7 +185,19 @@
 					type: 'LINE',
 					options: {
 						width: '100%',
-						title: '60 Days Ago'
+						title: '60 Days Ago',
+						                trendlines: {
+							          0: {
+							            type: 'linear',
+							            color: 'green',
+							            lineWidth: 3,
+							            opacity: 0.3,
+							            showR2: true,
+							            visibleInLegend: true,
+							            labelInLegend: 'Trend'
+							          }
+							        }
+
 					}
 				}
 			});
