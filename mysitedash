@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Wonkydata: My Site Dashboard</title>
+	<link href='//fonts.googleapis.com/css?family=Open+Sans:700,400,300' rel='stylesheet'>
+	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<link rel="stylesheet" href="css/main.css">
+	<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+	<header class="Banner">
+		<h1 class="Banner-title">
+    	<a href="/">Expert Dashboard</a>
+    	<em>Powered by Embed API</em>
+  		</h1>
+		<div class="Banner-auth" id="auth"></div>
+	</header>
+
+	<main>
+		<div id="controlPanel">
+			<div class="controls" id="viewpicker"></div>
+			<div class="controls" id="datepicker"></div>
+		</div>
+		<div id="active-users-container"></div>
+		<!--Chart 1-->
+		<section class="myChart Component">
+			<h3 class="Chart-title">Total Traffic In Pageviews</h3>
+			<div id="chart1"></div>
+		</section>
+		<!--Chart 1a-->
+		<section class="myChart Component">
+			<h3 class="Chart-title">Total Traffic In Pageviews</h3>
+			<div id="chart1a"></div>
+		</section>
+		<!--Chart 2-->
+		<section class="myChart Component">
+			<h3 class="Chart-title">Most Popular Content</h3>
+			<div id="chart2"></div>
+		</section>
+		<!--Chart 3-->
+		<section class="myChart Component">
+			<h3 class="Chart-title">Content With Most On Site Social Sharing</h3>
+			<div id="chart3"></div>
+		</section>
+		<!--Chart 4-->
+		<section class="myChart Component">
+			<h3 class="Chart-title">Pages With The Most Exits</h3>
+			<div id="chart4"></div>
+		</section>
+		<!--Chart 5-->
+		<section class="myChart Component">
+			<h3 class="Chart-title">Site Search</h3>
+			<div id="chart5"></div>
+		</section>
+		<!--Chart 6-->
+		<section class="myChart Component">
+			<h3 class="Chart-title">Clicks on Categories</h3>
+			<div id="chart6"></div>
+		</section>
+		<!--Chart 7-->
+		<section class="myChart Component">
+			<h3 class="Chart-title">Sessions by Source</h3>
+			<div id="chart7"></div>
+		</section>
+		<!--Chart 8-->
+		<section class="myChart Component">
+			<h3 class="Chart-title">Top Offsite Links</h3>
+			<div id="chart8"></div>
+		</section>
+		<!--Chart 10-->
+		<section class="myChart Component">
+			<h3 class="Chart-title">Total Pageviews from Social</h3>
+			<div id="chart10"></div>
+		</section>
+		
+	</main>
+
+	<!-- This code snippet loads the Embed API. Do not modify! -->
+	<script>
+		(function (w, d, s, g, js, fjs) {
+			g = w.gapi || (w.gapi = {});
+			g.analytics = {
+				q: [],
+				ready: function (cb) {
+					this.q.push(cb)
+				}
+			};
+			js = d.createElement(s);
+			fjs = d.getElementsByTagName(s)[0];
+			js.src = 'https://apis.google.com/js/platform.js';
+			fjs.parentNode.insertBefore(js, fjs);
+			js.onload = function () {
+				g.load('analytics')
+			};
+		}(window, document, 'script'));
+	</script>
+
+	<!-- This demo uses the viewpicker component, which uses JavaScript promises. The promise.js script below polyfills promises in older browsers that don't support them. -->
+	<script src="js/promise.js"></script>
+	<script src="js/viewpicker.js"></script>
+	<script src="js/datepicker.js"></script>
+	<script src="js/active-users.js"></script>
+
+	<script>
+		gapi.analytics.ready(function () {
+			/**
+			 * Authorize this user.
+			 */
+			gapi.analytics.auth.authorize({
+				container: 'auth',
+				clientid: '789053248232-qtv0640ldg6s3rdcdfqviqe4luqnmgdu.apps.googleusercontent.com',
+			});
+			/**
+			 * Add a callback to add the `is-authorized` class to the body
+			 * as soon as authorization is successful. This is used to help
+			 * style components.
+			 */
+			gapi.analytics.auth.on('success', function () {
+				document.documentElement.classList.add('is-authorized');
+			});
+			/**
+			 * Create a new Viewpicker instance to be rendered inside of an
+			 * element with the id "viewpicker".
+			 */
+			var viewpicker = new gapi.analytics.ext.Viewpicker({
+				container: 'viewpicker'
+			}).execute();
+			// Initial Range
+			var range = {
+				'start-date': '7daysAgo',
+				'end-date': 'yesterday',
+			};
+			/**
+			 * Create a new Datepicker instance to be rendered inside of an
+			 * element with the id "datepicker-1" and set its date range.
+			 */
+			var datepicker = new gapi.analytics.ext.Datepicker({
+					container: 'datepicker'
+				})
+				.set(range)
+				.execute();
+			
+
+			/**
+			 * Create a new DataChart instance with the given query parameters
+			 * and Google chart options. It will be rendered inside an element
+			 * with the id "datachert".
+			 */
+			var dataChart1 = new gapi.analytics.googleCharts.DataChart({
+				query: {
+				  'dimensions': 'ga:date',
+			          'metrics': 'ga:pageviews',
+			          'start-date': '30daysAgo',
+			          'end-date': 'yesterday',
+				},
+				chart: {
+					container: 'chart1',
+					type: 'LINE',
+					options: {
+						width: '100%',
+						title: 'Last 30 Days'
+					}
+				}
+			});
+			
+			var dataChart1a = new gapi.analytics.googleCharts.DataChart({
+				query: {
+				  'dimensions': 'ga:date',
+			          'metrics': 'ga:pageviews',
+			          'start-date': '60daysAgo',
+			          'end-date': '30daysAgo',
+				},
+				chart: {
+					container: 'chart1a',
+					type: 'LINE',
+					options: {
+						width: '100%',
+						title: '60 Days Ago'
+					}
+				}
+			});
+			
+			var dataChart2 = new gapi.analytics.googleCharts.DataChart({
+				query: {
+			          'dimensions': 'ga:pagePath',
+			          'metrics': 'ga:pageviews,ga:bounceRate',
+			          'start-date': '30daysAgo',
+			          'end-date': 'yesterday',
+			          'sort': '-ga:pageviews',
+			          'max-results': '10',
+				},
+				chart: {
+					container: 'chart2',
+					type: 'TABLE',
+					options: {
+						width: '100%',
+						sort: 'enable',
+						showRowNumber: true
+					}
+				}
+			});
+
+
+
+			dataChart2.on('success', function(){
+				updateChart2Bounce();
+			})
+	
+			var dataChart3 = new gapi.analytics.googleCharts.DataChart({
+				query: {
+			          'dimensions': 'ga:pagePath',
+			          'metrics': 'ga:socialInteractions',
+			          'start-date': '30daysAgo',
+			          'end-date': 'yesterday',
+			          'sort': '-ga:socialInteractions',
+			          'max-results': '10',
+				},
+				chart: {
+					container: 'chart3',
+					type: 'TABLE',
+					options: {
+						width: '100%',
+						sort: 'enable',
+						showRowNumber: true
+					}
+				}
+			});
+			
+			var dataChart4 = new gapi.analytics.googleCharts.DataChart({
+				query: {
+			          'dimensions': 'ga:eventLabel',
+			          'metrics': 'ga:totalEvents',
+			          'start-date': '30daysAgo',
+			          'end-date': 'yesterday',
+			          'filters': 'ga:eventCategory==Exit',
+			          'sort': '-ga:totalEvents',
+			          'max-results': '10',
+				},
+				chart: {
+					container: 'chart4',
+					type: 'TABLE',
+					options: {
+						width: '100%'
+					}
+				}
+			});
+			
+			var dataChart5 = new gapi.analytics.googleCharts.DataChart({
+				query: {
+				  'dimensions': 'ga:searchKeyword',
+			          'metrics': 'ga:searchUniques',
+			          'start-date': '30daysAgo',
+			          'end-date': 'yesterday',
+			          'sort': '-ga:searchUniques',
+				  'max-results': '10',
+				},
+				chart: {
+					container: 'chart5',
+					type: 'TABLE',
+					options: {
+						width: '100%'
+					}
+				}
+			});
+			
+			var dataChart6 = new gapi.analytics.googleCharts.DataChart({
+				query: {
+			          'dimensions': 'ga:eventLabel',
+			          'metrics': 'ga:totalEvents',
+			          'start-date': '30daysAgo',
+			          'end-date': 'yesterday',
+			          'filters': 'ga:eventAction=@categoryList;ga:eventLabel=~^http;ga:eventLabel=@/od/;ga:eventCategory!@(not set)',
+			          'sort': '-ga:totalEvents',
+			          'max-results': '10',
+				},
+				chart: {
+					container: 'chart6',
+					type: 'TABLE',
+					options: {
+						width: '100%'
+					}
+				}
+			});
+			
+			var dataChart7 = new gapi.analytics.googleCharts.DataChart({
+				query: {
+			          'dimensions': 'ga:source',
+			          'metrics': 'ga:sessions',
+			          'start-date': '30daysAgo',
+			          'end-date': 'yesterday',
+			          'filters': 'ga:medium!@sm;ga:medium!@sem;ga:medium!@tcg;ga:medium!@none',
+			          'sort': '-ga:sessions',
+			          'max-results': '5',
+				},
+				chart: {
+					container: 'chart7',
+					type: 'BAR',
+					options: {
+						width: '100%'
+					}
+				}
+			});
+			
+			var dataChart8 = new gapi.analytics.googleCharts.DataChart({
+				query: {
+			          'dimensions': 'ga:eventLabel',
+			          'metrics': 'ga:totalEvents',
+			          'start-date': '30daysAgo',
+			          'end-date': 'yesterday',
+			          'filters': 'ga:eventCategory==Outbound Traffic',
+			          'sort': '-ga:totalEvents',
+			          'max-results': '10',
+				},
+				chart: {
+					container: 'chart8',
+					type: 'TABLE',
+					options: {
+						width: '100%'
+					}
+				}
+			});
+			
+			var dataChart10 = new gapi.analytics.googleCharts.DataChart({
+				query: {
+			          'dimensions': 'ga:date',
+			          'metrics': 'ga:pageviews',
+			          'start-date': '30daysAgo',
+			          'end-date': 'yesterday',
+			          'filters': 'ga:channelGrouping==Social',
+				},
+				chart: {
+					container: 'chart10',
+					type: 'LINE',
+					options: {
+						width: '100%'
+					}
+				}
+			});
+			
+			
+			/**
+			 * Register a handler to run whenever the user changes the view.
+			 * The handler will calls updateCharts and passes data as a param
+			 */
+			viewpicker.on('change', function (data) {
+				updateCharts(data);
+			});
+			/**
+			 * Register a handler to run whenever the user changes the date.
+			 * The handler will calls updateCharts and passes data as a param.
+			 */
+			datepicker.on('change', function (data) {
+				updateCharts(data);
+			});
+			/**
+			 * Updates all charts with new query.
+			 * Without this function user would have to set a new query
+			 * for each chart in both the datepicker and viewpicker event handler functions.
+			 */
+			function updateCharts(data) {
+				dataChart1.set({
+					query: data
+				}).execute();
+				dataChart1a.set({
+					query: data
+				}).execute();
+
+				dataChart2.set({
+					query: data
+				})
+				.execute();
+
+
+				dataChart3.set({
+					query: data
+				}).execute();
+				dataChart4.set({
+					query: data
+				}).execute();
+				dataChart5.set({
+					query: data
+				}).execute();
+				dataChart6.set({
+					query: data
+				}).execute();
+				dataChart7.set({
+					query: data
+				}).execute();
+				dataChart8.set({
+					query: data
+				}).execute();
+				dataChart10.set({
+					query: data
+				}).execute();
+			}
+			// End of analytics.ready
+		});
+		
+	
+	function updateChart2Bounce(){
+		var changeRows = ($("#chart2 tr").not(":first"))
+		$.each(changeRows, function(index, value){ 
+			var fixTD = $(value).children()[2];
+		    var tdValue = $(fixTD).html();
+		    $(fixTD).html(parseInt(tdValue) + "%");
+
+		})
+	}
+
+		
+	</script>
+
+
+<!--	<footer class="SourceLink">
+		<a href="http://allmyrandom.github.io/myproject/">
+  Back to home</a>
+		&nbsp;&#8594;
+	</footer>
+-->
+
+</body>
+
+</html>
