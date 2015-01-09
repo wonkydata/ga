@@ -13,7 +13,7 @@
 
 	<header class="Banner">
 		<h1 class="Banner-title">
-    	<a href="/">Wonkydata: My Site Dashboard</a>
+    	<a href="/">Expert Dashboard</a>
     	<em>Powered by Embed API</em>
   		</h1>
 		<div class="Banner-auth" id="auth"></div>
@@ -65,10 +65,6 @@
 			<h3 class="Chart-title">Sessions by Source</h3>
 			<div id="chart7"></div>
 		</section>
-		<!--Chart 8-->
-		<section class="myChart Component">
-			<h3 class="Chart-title">Top Offsite Links</h3>
-			<div id="chart8"></div>
 		</section>
 		<!--Chart 10-->
 		<section class="myChart Component">
@@ -197,8 +193,7 @@
 					type: 'TABLE',
 					options: {
 						width: '100%',
-						sort: 'enable',
-						showRowNumber: true
+						sort: 'enable'
 					}
 				}
 			});
@@ -223,8 +218,7 @@
 					type: 'TABLE',
 					options: {
 						width: '100%',
-						sort: 'enable',
-						showRowNumber: true
+						sort: 'enable'
 					}
 				}
 			});
@@ -243,7 +237,8 @@
 					container: 'chart4',
 					type: 'TABLE',
 					options: {
-						width: '100%'
+						width: '100%',
+						sort: 'enable'
 					}
 				}
 			});
@@ -261,7 +256,8 @@
 					container: 'chart5',
 					type: 'TABLE',
 					options: {
-						width: '100%'
+						width: '100%',
+						sort: 'enable'
 					}
 				}
 			});
@@ -280,7 +276,8 @@
 					container: 'chart6',
 					type: 'TABLE',
 					options: {
-						width: '100%'
+						width: '100%',
+						sort: 'enable'
 					}
 				}
 			});
@@ -299,29 +296,12 @@
 					container: 'chart7',
 					type: 'BAR',
 					options: {
-						width: '100%'
+						width: '100%',
+						sort: 'enable'
 					}
 				}
 			});
 			
-			var dataChart8 = new gapi.analytics.googleCharts.DataChart({
-				query: {
-			          'dimensions': 'ga:eventLabel',
-			          'metrics': 'ga:totalEvents',
-			          'start-date': '30daysAgo',
-			          'end-date': 'yesterday',
-			          'filters': 'ga:eventCategory==Outbound Traffic',
-			          'sort': '-ga:totalEvents',
-			          'max-results': '10',
-				},
-				chart: {
-					container: 'chart8',
-					type: 'TABLE',
-					options: {
-						width: '100%'
-					}
-				}
-			});
 			
 			var dataChart10 = new gapi.analytics.googleCharts.DataChart({
 				query: {
@@ -335,7 +315,8 @@
 					container: 'chart10',
 					type: 'LINE',
 					options: {
-						width: '100%'
+						width: '100%',
+						sort: 'enable'
 					}
 				}
 			});
@@ -387,9 +368,6 @@
 					query: data
 				}).execute();
 				dataChart7.set({
-					query: data
-				}).execute();
-				dataChart8.set({
 					query: data
 				}).execute();
 				dataChart10.set({
