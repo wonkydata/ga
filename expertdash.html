@@ -4,6 +4,7 @@
 	<meta charset="utf-8">
 	<title>Expert Dashboard Demo</title>
 	<link href='//fonts.googleapis.com/css?family=Open+Sans:700,400,300' rel='stylesheet'>
+	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<link rel="stylesheet" href="css/main.css">
 	<link rel="stylesheet" href="css/style.css">
 </head>
@@ -110,7 +111,7 @@
 			 */
 			gapi.analytics.auth.authorize({
 				container: 'auth',
-				clientid: '789053248232-qtv0640ldg6s3rdcdfqviqe4luqnmgdu.apps.googleusercontent.com',
+				clientid: '638695142059.apps.googleusercontent.com',
 			});
 			/**
 			 * Add a callback to add the `is-authorized` class to the body
@@ -200,6 +201,12 @@
 					}
 				}
 			});
+
+
+
+			dataChart2.on('success', function(){
+				updateChart2Bounce();
+			})
 	
 			var dataChart3 = new gapi.analytics.googleCharts.DataChart({
 				query: {
@@ -357,9 +364,13 @@
 				dataChart1a.set({
 					query: data
 				}).execute();
+
 				dataChart2.set({
 					query: data
-				}).execute();
+				})
+				.execute();
+
+
 				dataChart3.set({
 					query: data
 				}).execute();
@@ -385,21 +396,17 @@
 			// End of analytics.ready
 		});
 		
-	jQuery(document).ready(function(){
-	var s = document.createElement('script');
-	    s.setAttribute('src', 'http://code.jquery.com/jquery-latest.min.js');
-	    if (typeof jQuery == 'undefined') {
-	        document.getElementsByTagName('head')[0].appendChild(s);
-	    }
+	
+	function updateChart2Bounce(){
+		var changeRows = ($("#chart2 tr").not(":first"))
+		$.each(changeRows, function(index, value){ 
+			var fixTD = $(value).children()[2];
+		    var tdValue = $(fixTD).html();
+		    $(fixTD).html(parseInt(tdValue) + "%");
 
-	var changeRows = (jQuery("#chart2 tr").not(":first"))
-	jQuery.each(changeRows, function(index, value){ 
-		var fixTD = jQuery(value).children()[2];
-	    var tdValue = jQuery(fixTD).html();
-	    jQuery(fixTD).html(parseInt(tdValue) + "%");
+		})
+	}
 
-	})
-})	
 		
 	</script>
 
