@@ -21,10 +21,12 @@
 
 	<main>
 		
-		<FORM>
-			<INPUT TYPE="button" onClick="window.print()"Print>
-		</FORM>
-
+		<SCRIPT LANGUAGE="JavaScript"> 
+		if (window.print) {
+		document.write('<form><input type=button name=print value="Print" onClick="window.print()"></form>');
+		}
+		</script>
+		<div> </div>
 		<div id="controlPanel">
 			<div class="controls" id="viewpicker"></div>
 			<div class="controls" id="datepicker"></div>
