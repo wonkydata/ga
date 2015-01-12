@@ -400,10 +400,6 @@
 				updateCharts(data);
 			});
 			
-			 // Start tracking active users for this view.
-			 activeUsers.set(data).execute();			
-
-			
 			/**
 			 * Updates all charts with new query.
 			 * Without this function user would have to set a new query
@@ -443,6 +439,10 @@
 				}).execute();
 			}
 			// End of analytics.ready
+
+						
+			 // Start tracking active users for this view.
+			 activeUsers.set(data).execute();			
 
 			
 		});
